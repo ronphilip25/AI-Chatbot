@@ -1,27 +1,21 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Loader from "./Loader";
-import Message from "./Message";
-import { Inter, Roboto_Mono } from "next/font/google";
-
-// Import Google Fonts
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
-  subsets: ["latin"],
-});
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 export default function ChatBox() {
   const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
+  const [chat, setChat] = useState([
+    {
+      sender: "Tinker",
+      text: "Hello, I am Tinker! How can I assist you today?",
+      time: new Date().toLocaleTimeString(),
+      status: "Delivered",
+    },
+  ]);
   const [loading, setLoading] = useState(false);
   const chatRef = useRef(null);
 
-  // Auto-scroll to latest message
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -78,9 +72,7 @@ export default function ChatBox() {
   };
 
   return (
-    <div
-      className={`${inter.variable} ${robotoMono.variable} w-full h-screen flex flex-col bg-gray-900 text-white`}
-    >
+    <div className="w-full h-screen flex flex-col bg-gray-900 text-white">
       {/* Chat Messages */}
       <div
         ref={chatRef}
@@ -101,7 +93,7 @@ export default function ChatBox() {
       <div className="p-4 bg-gray-700 flex items-center shadow-md">
         <input
           type="text"
-          className="border border-gray-600 p-3 flex-1 rounded-md bg-gray-800 text-white outline-none font-mono"
+          className="border border-gray-600 p-3 flex-1 rounded-md bg-gray-800 text-white outline-none"
           placeholder="Type your message..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}

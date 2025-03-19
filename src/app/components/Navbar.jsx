@@ -1,8 +1,6 @@
-import Link from "next/link";
-
 export default function Navbar() {
   return (
-    <nav className="bg-gray-800 text-white py-4 flex justify-between items-center px-6">
+    <nav className="bg-gray-800 text-white py-4 flex justify-between items-center px-4">
       <div className="flex items-center space-x-3">
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <img
