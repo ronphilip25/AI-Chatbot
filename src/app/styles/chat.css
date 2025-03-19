@@ -1,0 +1,6 @@
+.chat-container {
+  height: calc(100vh - 140px); /* Adjust height based on header */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse; /* Newest messages appear at the bottom */
+}

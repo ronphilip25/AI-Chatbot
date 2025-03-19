@@ -72,11 +72,11 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-900 text-white">
+    <div className="w-full h-full flex flex-col bg-gray-900 text-white">
       {/* Chat Messages */}
       <div
         ref={chatRef}
-        className="flex-1 overflow-y-auto p-4 bg-gray-800 max-h-[calc(100vh-140px)] shadow-inner"
+        className="flex-1 overflow-y-auto p-4 bg-gray-800"
       >
         {chat.map((msg, index) => (
           <Message

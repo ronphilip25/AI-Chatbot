@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <main className="h-screen flex flex-col">
       <Navbar />
-      <ChatBox className="flex-1" />
+      <div className="flex-1 overflow-hidden">
+        <ChatBox />
+      </div>
     </main>
   );
 }
