@@ -5,7 +5,7 @@ export default function Navbar() {
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <img
             alt="logo"
-            src="/avatars/ai_img.avif"
+            src="/avatars/ai_img.ico"
             className="w-full h-full object-cover"
           />
         </div>

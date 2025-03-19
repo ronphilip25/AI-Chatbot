@@ -1,6 +1,6 @@
 export default function Message({ sender, text, time }) {
     const userAvatar = "/avatars/creep_user.webp"; // User avatar
-    const aiAvatar = "/avatars/ai_img.avif"; // AI avatar
+    const aiAvatar = "/avatars/ai_img.ico"; // AI avatar
   
     return (
       <div className={`chat ${sender === "You" ? "chat-end" : "chat-start"}`}>
@@ -13,7 +13,7 @@ export default function Message({ sender, text, time }) {
           </div>
         </div>
         <div className="chat-bubble">{text}</div>
-        <div className="chat-footer text-xs opacity-50">{time}</div>
+        {/* <div className="chat-footer text-xs opacity-50">{time}</div> */}
       </div>
     );
   }
