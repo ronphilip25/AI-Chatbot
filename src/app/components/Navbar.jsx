@@ -28,7 +28,7 @@ export default function Navbar() {
     setUser(null); // Reset user state
     setDropdownOpen(false);
     router.push("/"); // Redirect to login page
-    console.log("User logged out, session cleared");
+    console.log("User logged out, session are cleared");
   };
 
   // Close dropdown when clicking outside
