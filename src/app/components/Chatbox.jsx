@@ -90,25 +90,29 @@ export default function ChatBox() {
       </div>
 
       {/* Chat Input */}
-      <div className="p-4 bg-gray-700 flex items-center shadow-md">
-        <textarea
-          className="border border-gray-600 p-3 flex-1 rounded-md bg-gray-800 text-white outline-none resize-none h-auto max-h-32 overflow-y-auto"
-          placeholder="Type your message..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault(); // Prevents new line on Enter
-              sendMessage();
-            }
-          }}
-          rows={1} // Starts small but expands
-        ></textarea>
+      <div className="p-4 bg-gray-800 flex items-center shadow-lg border-t border-gray-700">
+        <div className="relative flex-1">
+          <textarea
+            className="w-full p-3 rounded-lg bg-gray-900/70 text-white placeholder-gray-400 outline-none resize-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md border border-gray-700 focus:border-blue-400"
+            placeholder="Type your message..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
+            rows={1}
+            style={{ minHeight: "40px", maxHeight: "120px", overflowY: "auto" }}
+          ></textarea>
+        </div>
         <button
           onClick={sendMessage}
-          className="ml-3 bg-blue-500 hover:bg-blue-400 text-white px-5 py-3 rounded-md transition-all duration-300"
+          className="ml-3 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-lg transition-all duration-300 shadow-md flex items-center gap-2"
         >
-           Send
+          <span className="hidden sm:inline">Send</span>
+          🚀
         </button>
       </div>
     </div>
