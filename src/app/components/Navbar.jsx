@@ -63,7 +63,7 @@ export default function Navbar() {
 
       {/* Right Section: GitHub Link & User Dropdown */}
       <div className="flex items-center space-x-6 relative">
-        <a
+{/*         <a
           href="https://github.com/ronphilip25/AI-Chatbot.git"
           target="_blank"
           rel="noopener noreferrer"
@@ -85,7 +85,7 @@ export default function Navbar() {
           >
             GitHub
           </span>
-        </a>
+        </a> */}
 
         {/* User Icon Dropdown */}
         <div className="relative flex" ref={dropdownRef}>
