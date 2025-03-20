@@ -9,9 +9,16 @@ export default function Login() {
   const handleLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`, // Match your Supabase settings
+      },
     });
-    if (error) console.error("Login error:", error.message);
+  
+    if (error) {
+      console.error("Login error:", error.message);
+    }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
