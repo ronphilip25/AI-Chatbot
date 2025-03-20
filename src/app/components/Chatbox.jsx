@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { supabase } from "../lib/supabaseClient";
 
 export default function ChatBox() {
   const [message, setMessage] = useState("");
@@ -14,13 +15,43 @@ export default function ChatBox() {
     },
   ]);
   const [loading, setLoading] = useState(false);
+  const [userAvatar, setUserAvatar] = useState(null);
   const chatRef = useRef(null);
+
+  // Fetch authenticated user's avatar
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Auth error:", error);
+        return;
+      }
+      setUserAvatar(data?.user?.user_metadata?.avatar_url || null);
+    };
+
+    fetchUser();
+
+    // Listen for authentication state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === "SIGNED_OUT") {
+          setUserAvatar(null); // Reset avatar when user logs out
+        } else if (session) {
+          setUserAvatar(session.user?.user_metadata?.avatar_url || null);
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTo({
         top: chatRef.current.scrollHeight,
-        behavior: "smooth", // Enables smooth scrolling
+        behavior: "smooth",
       });
     }
   }, [chat]);
@@ -33,6 +64,7 @@ export default function ChatBox() {
       text: message,
       time: new Date().toLocaleTimeString(),
       status: "Sent",
+      userAvatar: userAvatar, // Pass the user's avatar dynamically
     };
 
     setChat((prevChat) => [...prevChat, userMessage]);
@@ -83,7 +115,7 @@ export default function ChatBox() {
             key={index}
             sender={msg.sender}
             text={msg.text}
-            time={msg.time}
+            userAvatarUrl={msg.sender === "You" ? userAvatar : null} // Pass dynamic avatar
           />
         ))}
         {loading && <Loader />}
