@@ -18,7 +18,10 @@ export default function ChatBox() {
 
   useEffect(() => {
     if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      chatRef.current.scrollTo({
+        top: chatRef.current.scrollHeight,
+        behavior: "smooth", // Enables smooth scrolling
+      });
     }
   }, [chat]);
 
@@ -74,10 +77,7 @@ export default function ChatBox() {
   return (
     <div className="w-full h-full flex flex-col bg-gray-900 text-white">
       {/* Chat Messages */}
-      <div
-        ref={chatRef}
-        className="flex-1 overflow-y-auto p-4 bg-gray-800"
-      >
+      <div ref={chatRef} className="flex-1 overflow-y-auto p-4 bg-gray-800">
         {chat.map((msg, index) => (
           <Message
             key={index}
@@ -91,20 +91,24 @@ export default function ChatBox() {
 
       {/* Chat Input */}
       <div className="p-4 bg-gray-700 flex items-center shadow-md">
-        <input
-          type="text"
-          className="border border-gray-600 p-3 flex-1 rounded-md bg-gray-800 text-white outline-none"
+        <textarea
+          className="border border-gray-600 p-3 flex-1 rounded-md bg-gray-800 text-white outline-none resize-none h-auto max-h-32 overflow-y-auto"
           placeholder="Type your message..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        />
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault(); // Prevents new line on Enter
+              sendMessage();
+            }
+          }}
+          rows={1} // Starts small but expands
+        ></textarea>
         <button
           onClick={sendMessage}
           className="ml-3 bg-blue-500 hover:bg-blue-400 text-white px-5 py-3 rounded-md transition-all duration-300"
-          disabled={loading}
         >
-          {loading ? <Loader /> : "Send"}
+           Send
         </button>
       </div>
     </div>
