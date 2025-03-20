@@ -93,7 +93,7 @@ export default function ChatBox() {
       <div className="p-4 bg-gray-800 flex items-center shadow-lg border-t border-gray-700">
         <div className="relative flex-1">
           <textarea
-            className="w-full p-3 rounded-lg bg-gray-900/70 text-white placeholder-gray-400 outline-none resize-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md border border-gray-700 focus:border-blue-400"
+            className="w-full p-3 rounded-lg mt-2 bg-gray-900/70 text-white placeholder-gray-400 outline-none resize-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md border border-gray-700 focus:border-blue-400"
             placeholder="Type your message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
