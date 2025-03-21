@@ -84,7 +84,11 @@ export default function ChatBox() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <Message sender={msg.sender} text={msg.text} />
+            <Message
+              sender={msg.sender}
+              text={msg.text}
+              userAvatarUrl={msg.sender === "You" ? userAvatar : null} // Pass dynamic avatar
+            />
           </motion.div>
         ))}
         {loading && <Loader />}
