@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 
@@ -24,21 +25,48 @@ export default function Dashboard() {
   }, [router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-900 text-white text-center">
-      <div className="max-w-lg w-full">
-        <h1 className="text-xl md:text-4xl font-bold">
+    <motion.div
+      className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-900 text-white text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <motion.div
+        className="max-w-lg w-full"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <motion.h1
+          className="text-xl md:text-4xl font-bold"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           🎉 Welcome, {user?.email}!
-        </h1>
-        <p className="text-gray-400 mt-2 text-sm md:text-base">
+        </motion.h1>
+
+        <motion.p
+          className="text-gray-400 mt-2 text-sm md:text-base"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           You are now logged in.
-        </p>
-        <button
+        </motion.p>
+
+        <motion.button
           onClick={() => router.push("/")}
-          className="mt-6 bg-blue-600 cursor-pointer hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+          className="mt-6 bg-blue-600 cursor-pointer hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform w-full sm:w-auto"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
           Go to Dashboard
-        </button>
-      </div>
-    </div>
+        </motion.button>
+      </motion.div>
+    </motion.div>
   );
 }
