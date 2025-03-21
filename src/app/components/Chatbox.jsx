@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { supabase } from "../lib/supabaseClient";
+import SendButton from "./Sendbutton";
 
 export default function ChatBox() {
   const [message, setMessage] = useState("");
@@ -128,14 +129,7 @@ export default function ChatBox() {
             }}
           ></textarea>
         </div>
-        <motion.button
-          onClick={sendMessage}
-          className="ml-3 bg-blue-600 cursor-pointer hover:bg-blue-500 text-white px-5 py-3 rounded-lg transition-all duration-300 shadow-md flex items-center gap-2"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <span className="hidden sm:inline">Send</span> 🚀
-        </motion.button>
+        <SendButton sendMessage={sendMessage} isLoading={loading} />
       </motion.div>
     </div>
   );
