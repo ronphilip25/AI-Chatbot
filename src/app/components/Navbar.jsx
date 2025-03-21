@@ -78,29 +78,27 @@ export default function Navbar() {
 
       {/* Right Section: GitHub Link & User Dropdown */}
       <div className="flex items-center space-x-6 relative">
-        {/*         <a
+        <a
           href="https://github.com/ronphilip25/AI-Chatbot.git"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center space-x-3 group relative"
+          className="lg:flex md:flex items-center space-x-3 group relative hidden"
           onMouseEnter={() => setIsTouched(true)}
           onTouchStart={() => setIsTouched(true)}
           onMouseLeave={() => setIsTouched(false)}
           onTouchEnd={() => setTimeout(() => setIsTouched(false), 2000)}
         >
           <FaGithub
-            className={`text-4xl text-gray-400 transition-transform duration-300 ${
-              isTouched ? "translate-x-0 text-white" : "translate-x-16"
-            }`}
+            className={`text-4xl text-gray-400 transition-transform duration-300 ${isTouched ? "translate-x-0 text-white" : "translate-x-16"
+              }`}
           />
           <span
-            className={`text-sm font-medium text-gray-300 transition-opacity duration-300 ${
-              isTouched ? "opacity-100" : "opacity-0"
-            }`}
+            className={`text-sm font-medium text-gray-300 transition-opacity duration-300 ${isTouched ? "opacity-100" : "opacity-0"
+              }`}
           >
             GitHub
           </span>
-        </a> */}
+        </a>
 
         {/* User Icon Dropdown */}
         <div className="relative flex" ref={dropdownRef}>

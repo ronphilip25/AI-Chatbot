@@ -29,7 +29,7 @@ export default function Dashboard() {
       <p className="text-gray-400 mt-2">You are now logged in.</p>
       <button
         onClick={() => router.push("/")}
-        className="mt-6 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
+        className="mt-6 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
       >
         Go to Dashboard
       </button>
