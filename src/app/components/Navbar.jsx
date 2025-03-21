@@ -10,7 +10,6 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const router = useRouter();
-  const [isTouched, setIsTouched] = useState(false);
 
   const defaultUserAvatar = "/avatars/creep_user.webp"; // Default avatar
 
@@ -90,11 +89,21 @@ export default function Navbar() {
         </motion.a>
 
         {/* User Avatar & Dropdown */}
-        <div className="relative flex" ref={dropdownRef}>
+        <div className="relative flex items-center space-x-3" ref={dropdownRef}>
+          {/* Show user name & email if logged in */}
+          {user && (
+            <div className="hidden md:flex flex-col text-right">
+              <span className="text-sm font-medium">{user?.user_metadata?.full_name || "User"}</span>
+              <span className="text-xs text-gray-400">{user?.email}</span>
+            </div>
+          )}
+
+          {/* User Avatar Button */}
           <motion.button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            className="flex items-center space-x-2 relative"
           >
             <img
               src={user?.user_metadata?.avatar_url || defaultUserAvatar}
@@ -105,20 +114,24 @@ export default function Navbar() {
 
           {/* Dropdown Menu */}
           <motion.div
-            className="absolute right-0 mt-11 w-auto bg-gray-800 shadow-lg rounded-md overflow-hidden"
+            className="absolute right-0 mt-22 w-auto bg-gray-800 shadow-lg rounded-md overflow-hidden"
             initial={{ opacity: 0, scale: 0.9, y: -10 }}
-            animate={{ opacity: dropdownOpen ? 1 : 0, scale: dropdownOpen ? 1 : 0.9, y: dropdownOpen ? 0 : -10 }}
+            animate={dropdownOpen ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: -10 }}
             transition={{ duration: 0.3 }}
+            style={{ display: dropdownOpen ? "block" : "none" }}
           >
             {user ? (
-              <button
-                onClick={handleSignOut}
-                className="block w-auto cursor-pointer text-left px-4 py-2 text-white hover:bg-red-500 transition"
-              >
-                Logout
-              </button>
+              <>
+                {/* Logout Button */}
+                <button
+                  onClick={handleSignOut}
+                  className="block w-auto cursor-pointer text-left px-4 py-2 text-white hover:bg-red-500 transition"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
-              <a href="/login" className="block px-4 py-2 text-white hover:bg-blue-500 transition">
+              <a href="/login" className="block px-4 py-2 cursor-pointer text-white hover:bg-blue-500 transition">
                 Login
               </a>
             )}
