@@ -14,7 +14,7 @@ export default function LoggedOut() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-red-900 text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
       <h1 className="text-3xl font-bold">❌ You are logged out!</h1>
       <p className="text-lg mt-2">Redirecting to home...</p>
       <button
