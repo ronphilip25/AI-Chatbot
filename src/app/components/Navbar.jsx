@@ -105,7 +105,7 @@ export default function Navbar() {
 
           {/* Dropdown Menu */}
           <motion.div
-            className="absolute right-0 mt-11 w-36 bg-gray-800 shadow-lg rounded-md overflow-hidden"
+            className="absolute right-0 mt-11 w-auto bg-gray-800 shadow-lg rounded-md overflow-hidden"
             initial={{ opacity: 0, scale: 0.9, y: -10 }}
             animate={{ opacity: dropdownOpen ? 1 : 0, scale: dropdownOpen ? 1 : 0.9, y: dropdownOpen ? 0 : -10 }}
             transition={{ duration: 0.3 }}
@@ -113,7 +113,7 @@ export default function Navbar() {
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="block w-full cursor-pointer text-left px-4 py-2 text-white hover:bg-red-500 transition"
+                className="block w-auto cursor-pointer text-left px-4 py-2 text-white hover:bg-red-500 transition"
               >
                 Logout
               </button>
