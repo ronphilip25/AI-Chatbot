@@ -59,20 +59,57 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
     >
       {/* Left Section: Logo & Title */}
-      <div className="flex items-center space-x-4">
+      <motion.div className="flex items-center space-x-3 md:space-x-4">
+        {/* Animated Logo with Hover Effect */}
         <motion.img
           src="/avatars/ai_img.ico"
           alt="logo"
-          className="w-12 h-12 rounded-full shadow-md border border-gray-700"
+          className="w-9 h-9 md:w-12 md:h-12 rounded-full shadow-md border border-gray-700"
           whileHover={{ scale: 1.1 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         />
-        <div>
-          <h1 className="text-md font-bold tracking-wide md:text-2xl">
-            Tinker | AI Chatbot
-          </h1>
-          <p className="text-xs text-gray-400">v1.0.0 • by Ron Philip • © 2025</p>
-        </div>
-      </div>
+
+        {/* Animated Title with Staggered Text */}
+        <motion.div>
+          <motion.h1
+            className="text-sm font-bold tracking-wide md:text-2xl flex flex-wrap space-x-0.5 md:space-x-1"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.05 } // Delay between letters
+              }
+            }}
+          >
+            {"Tinker | AI Chatbot".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                {char === " " ? "\u00A0" : char} {/* Preserve spaces */}
+              </motion.span>
+            ))}
+          </motion.h1>
+
+          {/* Version and Author Info */}
+          <motion.p
+            className="text-[10px] md:text-xs text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          >
+            v1.0.0 • by Ron Philip • © 2025
+          </motion.p>
+        </motion.div>
+      </motion.div>
 
       {/* Right Section: GitHub Link & User Dropdown */}
       <div className="flex items-center space-x-6 relative">
@@ -85,7 +122,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FaGithub className="text-4xl text-gray-400 hover:text-white transition-colors duration-300" title="GitHub"/>
+          <FaGithub className="text-4xl text-gray-400 hover:text-white transition-colors duration-300" title="GitHub" />
         </motion.a>
 
         {/* User Avatar & Dropdown */}
@@ -103,12 +140,12 @@ export default function Navbar() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="flex items-center space-x-2 relative"
+            className="flex items-center space-x-2 relative "
           >
             <img
               src={user?.user_metadata?.avatar_url || defaultUserAvatar}
               alt="User Profile"
-              className="w-10 h-10 cursor-pointer rounded-full border-2 border-gray-400 hover:border-white transition"
+              className="w-9 h-9 md:w-10 md:h-10 cursor-pointer rounded-full border-2 border-gray-400 hover:border-white transition"
             />
           </motion.button>
 
