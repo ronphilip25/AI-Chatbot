@@ -1,6 +1,6 @@
 "use client";
 import { supabase } from "../lib/supabaseClient";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -55,9 +55,9 @@ export default function Login() {
         {/* Sign in Button */}
         <button
           onClick={handleLogin}
-          className="w-full flex cursor-pointer items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
+          className="w-full flex cursor-pointer items-center justify-center gap-2 bg-blue-500 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
         >
-          <FaGoogle size={20} /> Sign in with Google
+          <FcGoogle size={20} /> Sign in with Google
         </button>
 
         {/* Back to Home Button */}
