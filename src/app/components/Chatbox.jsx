@@ -101,7 +101,7 @@ export default function ChatBox() {
 
       {/* Animated Chat Input */}
       <motion.div
-        className={`p-4 bg-gray-800 flex items-center shadow-lg border-t border-gray-700 ${!inputMoved
+        className={`p-4 bg-gray-800 flex items-center shadow-lg rounded-lg border-t border-gray-700 ${!inputMoved
           ? "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 md:w-1/2 lg:w-1/3"
           : "fixed bottom-0 w-full px-4"
           }`}
