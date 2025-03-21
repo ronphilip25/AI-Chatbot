@@ -67,7 +67,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.1 }}
         />
         <div>
-          <h1 className="text-xl font-semibold tracking-wide">
+          <h1 className="text-md font-bold tracking-wide md:text-2xl">
             Tinker | AI Chatbot
           </h1>
           <p className="text-xs text-gray-400">v1.0.0 • by Ron Philip • © 2025</p>
