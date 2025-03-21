@@ -26,8 +26,10 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-900 text-white text-center">
       <div className="max-w-lg w-full">
-        <h1 className="text-3xl md:text-4xl font-bold">
-          🎉 Welcome, {user?.email}!
+        <h1 className="text-xl md:text-5xl lg:text-6xl font-bold">
+          <span className="block md:inline"> Welcome, </span>
+          <span className="hidden md:inline">{user?.email}</span>
+          <span className="block md:hidden">!</span>
         </h1>
         <p className="text-gray-400 mt-2 text-sm md:text-base">
           You are now logged in.
