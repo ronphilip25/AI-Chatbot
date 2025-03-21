@@ -1,50 +1,26 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { supabase } from "../lib/supabaseClient";
 
 export default function ChatBox() {
   const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([
-    {
-      sender: "Tinker",
-      text: "Hello, I am Tinker! How can I assist you today?",
-      time: new Date().toLocaleTimeString(),
-      status: "Delivered",
-    },
-  ]);
+  const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userAvatar, setUserAvatar] = useState(null);
+  const [inputMoved, setInputMoved] = useState(false);
   const chatRef = useRef(null);
 
-  // Fetch authenticated user's avatar
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getUser();
-      if (error) {
-        console.error("Auth error:", error);
-        return;
+      if (!error) {
+        setUserAvatar(data?.user?.user_metadata?.avatar_url || null);
       }
-      setUserAvatar(data?.user?.user_metadata?.avatar_url || null);
     };
-
     fetchUser();
-
-    // Listen for authentication state changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === "SIGNED_OUT") {
-          setUserAvatar(null); // Reset avatar when user logs out
-        } else if (session) {
-          setUserAvatar(session.user?.user_metadata?.avatar_url || null);
-        }
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
   }, []);
 
   useEffect(() => {
@@ -59,12 +35,11 @@ export default function ChatBox() {
   const sendMessage = async () => {
     if (!message.trim()) return;
 
+    setInputMoved(true);
     const userMessage = {
       sender: "You",
       text: message,
       time: new Date().toLocaleTimeString(),
-      status: "Sent",
-      userAvatar: userAvatar, // Pass the user's avatar dynamically
     };
 
     setChat((prevChat) => [...prevChat, userMessage]);
@@ -82,50 +57,52 @@ export default function ChatBox() {
       if (data.response) {
         setChat((prevChat) => [
           ...prevChat,
-          {
-            sender: "Tinker",
-            text: data.response,
-            time: new Date().toLocaleTimeString(),
-            status: "Delivered",
-          },
+          { sender: "Tinker", text: data.response, time: new Date().toLocaleTimeString() },
         ]);
       }
     } catch (error) {
       console.error("Error:", error);
-      setChat((prevChat) => [
-        ...prevChat,
-        {
-          sender: "Tinker",
-          text: "Oops! Something went wrong. Try again later.",
-          time: new Date().toLocaleTimeString(),
-          status: "Error",
-        },
-      ]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col bg-gray-900 text-white">
+    <div className="w-full h-screen flex flex-col bg-gray-900 text-white">
       {/* Chat Messages */}
-      <div ref={chatRef} className="flex-1 overflow-y-auto p-4 bg-gray-800">
+      <motion.div
+        ref={chatRef}
+        className="flex-1 overflow-y-auto p-4 bg-gray-800"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         {chat.map((msg, index) => (
-          <Message
+          <motion.div
             key={index}
-            sender={msg.sender}
-            text={msg.text}
-            userAvatarUrl={msg.sender === "You" ? userAvatar : null} // Pass dynamic avatar
-          />
+            initial={{ opacity: 0, x: msg.sender === "You" ? 50 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <Message sender={msg.sender} text={msg.text} />
+          </motion.div>
         ))}
         {loading && <Loader />}
-      </div>
+      </motion.div>
 
-      {/* Chat Input */}
-      <div className="p-4 bg-gray-800 flex items-center shadow-lg border-t border-gray-700">
+      {/* Animated Chat Input */}
+      <motion.div
+        className={`p-4 bg-gray-800 flex items-center shadow-lg border-t border-gray-700 ${!inputMoved
+          ? "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 md:w-1/2 lg:w-1/3"
+          : "fixed bottom-0 w-full px-4"
+          }`}
+        initial={{ y: "-50%", opacity: 0 }}
+        animate={{ y: inputMoved ? "0%" : "-50%", opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
         <div className="relative flex-1">
           <textarea
-            className="w-full p-3 rounded-lg mt-2 bg-gray-900/70 text-white placeholder-gray-400 outline-none resize-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md border border-gray-700 focus:border-blue-400"
+            className="w-full p-3 rounded-lg mt-2 bg-gray-900/70 text-white truncate placeholder-gray-400 outline-none resize-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 shadow-md border border-gray-700 focus:border-blue-400"
             placeholder="Type your message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -136,17 +113,22 @@ export default function ChatBox() {
               }
             }}
             rows={1}
-            style={{ minHeight: "40px", maxHeight: "120px", overflowY: "auto" }}
+            style={{
+              minHeight: "40px",
+              maxHeight: "120px",
+              overflowY: "auto",
+            }}
           ></textarea>
         </div>
-        <button
+        <motion.button
           onClick={sendMessage}
           className="ml-3 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-lg transition-all duration-300 shadow-md flex items-center gap-2"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
-          <span className="hidden sm:inline">Send</span>
-          🚀
-        </button>
-      </div>
+          <span className="hidden sm:inline">Send</span> 🚀
+        </motion.button>
+      </motion.div>
     </div>
   );
 }
