@@ -85,7 +85,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FaGithub className="text-4xl text-gray-400 hover:text-white transition-colors duration-300" />
+          <FaGithub className="text-4xl text-gray-400 hover:text-white transition-colors duration-300" title="GitHub"/>
         </motion.a>
 
         {/* User Avatar & Dropdown */}
