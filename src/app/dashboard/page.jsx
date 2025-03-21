@@ -24,15 +24,21 @@ export default function Dashboard() {
   }, [router]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold">🎉 Welcome, {user?.email}!</h1>
-      <p className="text-gray-400 mt-2">You are now logged in.</p>
-      <button
-        onClick={() => router.push("/")}
-        className="mt-6 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105"
-      >
-        Go to Dashboard
-      </button>
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gray-900 text-white text-center">
+      <div className="max-w-lg w-full">
+        <h1 className="text-3xl md:text-4xl font-bold">
+          🎉 Welcome, {user?.email}!
+        </h1>
+        <p className="text-gray-400 mt-2 text-sm md:text-base">
+          You are now logged in.
+        </p>
+        <button
+          onClick={() => router.push("/")}
+          className="mt-6 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+        >
+          Go to Dashboard
+        </button>
+      </div>
     </div>
   );
 }
