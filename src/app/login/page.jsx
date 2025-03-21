@@ -2,6 +2,7 @@
 import { supabase } from "../lib/supabaseClient";
 import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Login() {
   const router = useRouter();
@@ -10,19 +11,44 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/logged-in`,
       },
     });
 
-  if (error) console.error("Login error:", error.message);
-};
+    if (error) {
+      console.error("Login error:", error.message);
+    }
+  };
 
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data?.session) {
+        router.push("/logged-in"); // ✅ Redirect if already logged in
+      }
+    };
+
+    checkUserSession();
+
+    // Listen for changes in auth state
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          router.push("/logged-in");
+        }
+      }
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, [router]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <div className="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-gray-700 w-96 text-center">
         <h1 className="text-3xl font-semibold text-black mb-4">Welcome Back</h1>
-        <p className="text-gray-500 text-sm mb-6">
+        <p className="text-gray-400 text-sm mb-6">
           Sign in to continue using Tinker AI Chatbot
         </p>
 

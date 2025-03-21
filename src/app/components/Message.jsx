@@ -14,7 +14,7 @@ export default function Message({ sender, text, userAvatarUrl }) {
         </div>
       </div>
       <div
-        className={`chat-bubble break-words whitespace-pre-wrap ${sender === "Tinker" ? "bg-gray-700" : "bg-blue-500"
+        className={`chat-bubble break-words whitespace-pre-wrap ${sender === "Tinker" ? "bg-blue-500 text-white" : "bg-green-500 text-white"
           }`}
       >
         {text}

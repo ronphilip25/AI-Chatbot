@@ -15,19 +15,34 @@ export default function Navbar() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      const { data, error } = await supabase.auth.getSession();
       if (error) console.error("Auth error:", error);
       setUser(data?.user || null);
     };
 
+
     fetchUser();
+
+    // Listen for auth changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      authListener?.subscription?.unsubscribe();
+    };
   }, []);
+
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     setUser(null); // Reset user state
     setDropdownOpen(false);
-    router.push("/"); // Redirect to login page
+    router.push("/logged-out"); // Redirect to "logged out" page
     console.log("User logged out, session are cleared");
   };
 
@@ -63,7 +78,7 @@ export default function Navbar() {
 
       {/* Right Section: GitHub Link & User Dropdown */}
       <div className="flex items-center space-x-6 relative">
-{/*         <a
+        {/*         <a
           href="https://github.com/ronphilip25/AI-Chatbot.git"
           target="_blank"
           rel="noopener noreferrer"
@@ -99,11 +114,10 @@ export default function Navbar() {
 
           {/* Dropdown Menu with Animation */}
           <div
-            className={`absolute right-0 mt-11 w-36 bg-gray-800 shadow-lg rounded-md overflow-hidden transform transition-all duration-300 ${
-              dropdownOpen
-                ? "opacity-100 scale-100 translate-y-0"
-                : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-            }`}
+            className={`absolute right-0 mt-11 w-36 bg-gray-800 shadow-lg rounded-md overflow-hidden transform transition-all duration-300 ${dropdownOpen
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
           >
             {user ? (
               <>
