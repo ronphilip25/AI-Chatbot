@@ -13,6 +13,7 @@ export default function ChatBox() {
   const [userAvatar, setUserAvatar] = useState(null);
   const [inputMoved, setInputMoved] = useState(false);
   const chatRef = useRef(null);
+  const [showGreeting, setShowGreeting] = useState(true); // Control greeting visibility
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -70,6 +71,19 @@ export default function ChatBox() {
 
   return (
     <div className="w-full h-full flex flex-col bg-gray-900 text-white">
+      {/* Introduction Greeting (Near Text Input) */}
+      {showGreeting && chat.length === 0 && (
+        <motion.div
+          className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-gray-400 text-2xl md:text-4xl font-bold"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+        >
+          Hello, I'm Tinker! Pew pew pew 🚀
+        </motion.div>
+      )}
+
       {/* Chat Messages */}
       <motion.div
         ref={chatRef}
@@ -78,7 +92,7 @@ export default function ChatBox() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          maxHeight: "80vh", // Limit max height to enable scrolling
+          maxHeight: "80vh",
           overflowY: "auto",
         }}
       >
@@ -92,7 +106,7 @@ export default function ChatBox() {
             <Message
               sender={msg.sender}
               text={msg.text}
-              userAvatarUrl={msg.sender === "You" ? userAvatar : null} // Pass dynamic avatar
+              userAvatarUrl={msg.sender === "You" ? userAvatar : null}
             />
           </motion.div>
         ))}
