@@ -28,8 +28,8 @@ export default function Message({ sender, text, userAvatarUrl }) {
         animate={{ scale: 1 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
         className={`chat-bubble break-words whitespace-pre-wrap ${sender === "Tinker"
-          ? "bg-blue-500 text-white"
-          : "bg-green-500 text-white"
+          ? "bg-blue-500 text-white font-semibold"
+          : "bg-lime-800 text-white font-semibold"
           }`}
       >
         {text}

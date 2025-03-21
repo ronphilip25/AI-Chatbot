@@ -53,7 +53,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="bg-gray-900 text-white py-6 px-6 flex justify-between items-center shadow-lg sticky top-0 z-50"
+      className="bg-gray-800 text-white py-6 px-6 flex justify-between items-center shadow-lg sticky top-0 z-50"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
