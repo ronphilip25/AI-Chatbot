@@ -78,7 +78,7 @@ export default function ChatBox() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          maxHeight: "75vh", // Limit max height to enable scrolling
+          maxHeight: "80vh", // Limit max height to enable scrolling
           overflowY: "auto",
         }}
       >
