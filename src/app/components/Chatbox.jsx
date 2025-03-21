@@ -72,10 +72,14 @@ export default function ChatBox() {
       {/* Chat Messages */}
       <motion.div
         ref={chatRef}
-        className="flex-1 overflow-y-auto p-4 bg-gray-800"
+        className="flex-1 overflow-y-auto p-4 bg-gray-800 chat-container"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        style={{
+          maxHeight: "75vh", // Limit max height to enable scrolling
+          overflowY: "auto",
+        }}
       >
         {chat.map((msg, index) => (
           <motion.div
