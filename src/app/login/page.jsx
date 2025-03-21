@@ -11,7 +11,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/logged-in`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
       },
     });
 
@@ -24,7 +24,7 @@ export default function Login() {
     const checkUserSession = async () => {
       const { data } = await supabase.auth.getUser();
       if (data?.session) {
-        router.push("/logged-in"); // ✅ Redirect if already logged in
+        router.push("/dashboard"); // ✅ Redirect if already logged in
       }
     };
 
@@ -34,7 +34,7 @@ export default function Login() {
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session) {
-          router.push("/logged-in");
+          router.push("/dashboard");
         }
       }
     );
