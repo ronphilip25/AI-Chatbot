@@ -12,8 +12,8 @@ export default function ChatBox() {
   const [loading, setLoading] = useState(false);
   const [userAvatar, setUserAvatar] = useState(null);
   const [inputMoved, setInputMoved] = useState(false);
+  const [showGreeting] = useState(true); // Control greeting visibility
   const chatRef = useRef(null);
-  const [showGreeting, setShowGreeting] = useState(true); // Control greeting visibility
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -92,7 +92,7 @@ export default function ChatBox() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          maxHeight: "80vh",
+          maxHeight: "calc(75vh - 10px)",
           overflowY: "auto",
         }}
       >
